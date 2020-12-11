@@ -10,12 +10,6 @@ data$Comment <- NULL
 data$Uniqid <- NULL
 data[2:5] <- NULL
 
-# Pasar categoría a minúscula (hay iguales)
-# data$Category <- tolower(data$Category)
-
-# Agregar las filas con la misma categoría sumando apariciones
-# data <- aggregate(. ~ Category, data, sum)
-
 # Histograma de todos los valores, vemos que son todo ceros y unos,
 # Además vemos que aparecen muchos más ceros que unos (9:1)
 hist(data.matrix(data[,-1]), main="Histograma de los valores de los datos")
@@ -43,8 +37,8 @@ axis(2, 1:dim, row.names(data)[-1], cex.axis = 0.5, las=1)
 # Colocamos los valores de las distancias en las posiciones correpsondientes
 text(expand.grid(1:dim, 1:dim), sprintf("%0.1f", dst), cex=0.6)
 
-# Hacemos el grafo de distancias. Hacemos 1/dst porque cuanto menor distancia
-# mayor tamaño de arista.
+# Hacemos el grafo de distancias. Utilizamos 1/dst porque cuanto menor 
+# distancia mayor tamaño de arista.
 dst <- 1/dst
 qgraph(dst, layout='spring', labels = colnames(dst))
 
@@ -54,3 +48,6 @@ qgraph(dst, layout='spring', labels = colnames(dst))
 # Steak <-> Chicken (Carnes)
 # Carrots <-> Onions <-> Brocoli <-> Lettuce (Verduras)
 # Apple <-> Orange <-> Pineapple <-> Banana <-> Watermelon (Frutas)
+
+# Dendrograma desde la matriz de distancias
+plot(hclust(dist(data[-1,], diag=TRUE)), xlab="", ylab="", sub="")
